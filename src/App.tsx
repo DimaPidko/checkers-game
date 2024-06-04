@@ -1,5 +1,4 @@
-import React from 'react'
-// import { useState } from 'react'
+import React from 'react';
 
 const map: Array<Array<number>> = [
   [0, 1, 0, 1, 0, 1, 0, 1],
@@ -10,7 +9,7 @@ const map: Array<Array<number>> = [
   [1, 0, 1, 0, 1, 0, 1, 0],
   [0, 1, 0, 1, 0, 1, 0, 1],
   [1, 0, 1, 0, 1, 0, 1, 0],
-]
+];
 
 const checkers: Array<Array<number | null>> = [
   [null, 0, null, 0, null, 0, null, 0],
@@ -21,30 +20,47 @@ const checkers: Array<Array<number | null>> = [
   [1, null, 1, null, 1, null, 1, null],
   [null, 1, null, 1, null, 1, null, 1],
   [1, null, 1, null, 1, null, 1, null],
-]
+];
+
 const App: React.FC = () => {
+  const handleCheckerClick = (rowIndex: number, cellIndex: number) => {
+    console.log(`Checker clicked at row ${rowIndex}, cell ${cellIndex}`);
+  };
   
   const renderMap = (map: Array<Array<number>>, checkers: Array<Array<number | null>>) => {
     return map.map((row, rowIndex) => (
-      <div key={rowIndex} style={{ display: 'flex'}}>
-        {row.map((cells, cellsIndex) => (
-          <div key={cellsIndex} style={{ width: '40px', height: '40px', background: cells === 0 ? 'white' : 'black', position: 'relative'}}>
-            {checkers[rowIndex][cellsIndex] !== null && (
-              <div style={{width: '30px', height: '30px', borderRadius: '50%', backgroundColor: checkers[rowIndex][cellsIndex] === 0 ? 'red' : 'blue', position: 'absolute', top: '5px', left: '5px'}}>
-              
-              </div>
+      <div key={rowIndex} style={{ display: 'flex' }}>
+        {row.map((cell, cellIndex) => (
+          <div
+            key={cellIndex}
+            style={{
+              width: '100px',
+              height: '100px',
+              backgroundColor: cell === 0 ? 'white' : 'black',
+              position: 'relative',
+            }}
+          >
+            {checkers[rowIndex][cellIndex] !== null && (
+              <button
+                style={{
+                  width: '80px',
+                  height: '80px',
+                  borderRadius: '50%',
+                  backgroundColor: checkers[rowIndex][cellIndex] === 0 ? 'red' : 'blue',
+                  position: 'absolute',
+                  top: '10px',
+                  left: '10px',
+                }}
+                onClick={() => handleCheckerClick(rowIndex, cellIndex)}
+              ></button>
             )}
           </div>
         ))}
       </div>
-    ))
-  }
+    ));
+  };
   
-  return (
-    <section>
-      {renderMap(map, checkers)}
-    </section>
-  )
-}
+  return <section>{renderMap(map, checkers)}</section>;
+};
 
-export default App
+export default App;
